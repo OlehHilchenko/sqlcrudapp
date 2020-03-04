@@ -1,0 +1,1 @@
+UPDATE skills SET name = 'ExtraSmart' WHERE developerId = 5 AND name = 'Smart';

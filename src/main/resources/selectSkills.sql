@@ -1,0 +1,1 @@
+SELECT developerId, name FROM skills WHERE developerId = 5;
