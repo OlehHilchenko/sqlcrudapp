@@ -4,16 +4,15 @@ import com.olehhilchenko.model.Skill;
 import com.olehhilchenko.repository.conection.SkillConnection;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class SkillRepositoryImplementation implements SkillRepository {
-    SkillConnection skillConnection = new SkillConnection();
+    private SkillConnection skillConnection = new SkillConnection();
 
     public void insert(Skill skill) {
-        String SQL = "INSERT INTO skills (developerId, name)\n" +
+        String sql = "INSERT INTO skills (id, name)\n" +
                 "VALUES ( " +skill.getId() + ", '" + skill.getName() + "');";
         try {
-            skillConnection.connection(SQL, true, false);
+            skillConnection.connection(sql, true, false);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -22,11 +21,21 @@ public class SkillRepositoryImplementation implements SkillRepository {
     }
 
     public void update(Skill skill) {
+        String sql = "UPDATE skills SET name = '" + skill.getName() + "' WHERE" +
+                " id = " + skill.getId() + ";";
+        try {
+            skillConnection.connection(sql, true, false);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
+    /*
     public void update(Skill skill, String oldName){
         String SQL = "UPDATE skills SET name = '" + skill.getName() + "' WHERE" +
-                " developerId = " + skill.getId() + " AND name = '" + oldName + "';";
+                " id = " + skill.getId() + ";";
         try {
             skillConnection.connection(SQL, true, false);
         } catch (ClassNotFoundException e) {
@@ -35,11 +44,23 @@ public class SkillRepositoryImplementation implements SkillRepository {
             e.printStackTrace();
         }
     }
+    */
 
     public Skill select(Integer integer) {
-        return null;
+        Skill skill = null;
+        String sql = "SELECT id, name FROM skills WHERE" +
+                " id = " + integer + ";";
+        try {
+            skill = skillConnection.connection(sql, false, true);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return skill;
     }
 
+    /*
     public List<Skill> selectSkillList(Integer developerId){
         List<Skill> skillList = null;
         String SQL = "SELECT developerId, name FROM skills WHERE" +
@@ -53,12 +74,13 @@ public class SkillRepositoryImplementation implements SkillRepository {
         }
         return skillList;
     }
+    */
 
     public void delete(Skill skill) {
-        String SQL = "DELETE FROM skills WHERE" +
-                " (developerId = " + skill.getId() + " AND name = '" + skill.getName() + "');";
+        String sql = "DELETE FROM skills WHERE" +
+                " (id = " + skill.getId() + " AND name = '" + skill.getName() + "');";
         try {
-            skillConnection.connection(SQL, true, false);
+            skillConnection.connection(sql, true, false);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

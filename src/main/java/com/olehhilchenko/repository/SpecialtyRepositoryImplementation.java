@@ -9,11 +9,10 @@ public class SpecialtyRepositoryImplementation implements SpecialtyRepository {
     private SpecialtyConnection specialtyConnection = new SpecialtyConnection();
 
     public void insert(Specialty specialty) {
-        String SQL = "INSERT INTO specialty (developerId, name, description)\n" +
+        String sql = "INSERT INTO specialty (id, name, description)\n" +
                 "VALUES (" + specialty.getId() + ", '" + specialty.getName() + "', '" + specialty.getDescription() + "');";
-
         try {
-            specialtyConnection.connection(SQL, true, false);
+            specialtyConnection.connection(sql, true, false);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -22,10 +21,10 @@ public class SpecialtyRepositoryImplementation implements SpecialtyRepository {
     }
 
     public void update(Specialty specialty) {
-        String SQL = "UPDATE specialty SET name = '" + specialty.getName() + "', description = '" + specialty.getDescription()+ "' WHERE" +
-                " developerId = " + specialty.getId() + ";";
+        String sql = "UPDATE specialty SET name = '" + specialty.getName() + "', description = '" + specialty.getDescription()+ "' WHERE" +
+                " id = " + specialty.getId() + ";";
         try {
-            specialtyConnection.connection(SQL, true, false);
+            specialtyConnection.connection(sql, true, false);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -35,10 +34,10 @@ public class SpecialtyRepositoryImplementation implements SpecialtyRepository {
 
     public Specialty select(Integer integer) {
         Specialty specialty = null;
-        String SQL = "SELECT developerId, name, description FROM specialty WHERE developerId = " + integer + ";";
+        String sql = "SELECT id, name, description FROM specialty WHERE id = " + integer + ";";
 
         try {
-            specialty = specialtyConnection.connection(SQL, false, true);
+            specialty = specialtyConnection.connection(sql, false, true);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -48,11 +47,10 @@ public class SpecialtyRepositoryImplementation implements SpecialtyRepository {
     }
 
     public void delete(Specialty specialty) {
-        String SQL = "DELETE FROM specialty\n" +
-                "WHERE developerId = " + specialty.getId() + ";";
-
+        String sql = "DELETE FROM specialty\n" +
+                "WHERE id = " + specialty.getId() + ";";
         try {
-            specialtyConnection.connection(SQL, true, false);
+            specialtyConnection.connection(sql, true, false);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

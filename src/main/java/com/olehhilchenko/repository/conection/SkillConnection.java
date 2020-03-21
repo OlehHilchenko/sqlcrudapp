@@ -8,26 +8,23 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkillConnection extends JDBCConnection<List<Skill>> {
+public class SkillConnection extends JDBCConnection <Skill> {
 
     @Override
-    public void createOrDeleteOrUpdate(String SQL, Statement statement) throws SQLException {
-        statement.executeUpdate(SQL);
+    public void createOrDeleteOrUpdate(String sql, Statement statement) throws SQLException {
+        statement.executeUpdate(sql);
     }
 
     @Override
-    public List<Skill> select(String SQL, Statement statement) throws SQLException {
-        List<Skill> skillList = new ArrayList<Skill>();
+    public Skill select(String sql, Statement statement) throws SQLException {
         Skill skill = new Skill();
-        ResultSet resultSet = statement.executeQuery(SQL);
+        ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()) {
-            int developerId = resultSet.getInt("developerId");
+            int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
-            skill.setId(developerId);
+            skill.setId(id);
             skill.setName(name);
-            skillList.add(skill);
-            skill = new Skill();
         }
-        return skillList;
+        return skill;
     }
 }
