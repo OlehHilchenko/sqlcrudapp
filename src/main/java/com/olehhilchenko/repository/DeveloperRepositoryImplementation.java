@@ -19,15 +19,15 @@ public class DeveloperRepositoryImplementation implements DeveloperRepository {
 
     public void insert(Developer developer) {
         List<DeveloperSkill> developerSkillList = new ArrayList<DeveloperSkill>();
-        for (Skill skill : developer.getSkills()){
+        for (Skill skill : developer.getSkills()) {
             skillRepositoryImplementation.insert(skill);
             developerSkillList.add(new DeveloperSkill(developer.getId(), skill.getId()));
         }
         specialtyRepositoryImplementation.insert(developer.getSpecialty());
         developerSkillRepositoryImplementation.insert(developerSkillList);
         developerSpecialtyRepository.insert(new DeveloperSpecialty(developer.getId(), developer.getSpecialty().getId()));
-            String sql = "INSERT INTO developer (id, first_name, last_name)\n" +
-                    "VALUES (" + developer.getId() + ", '" + developer.getFirstName() + "', '" + developer.getLastName() + "');";
+        String sql = "INSERT INTO developer (id, first_name, last_name)\n" +
+                "VALUES (" + developer.getId() + ", '" + developer.getFirstName() + "', '" + developer.getLastName() + "');";
         try {
             developerConnection.connection(sql, true, false);
         } catch (ClassNotFoundException e) {
@@ -49,7 +49,7 @@ public class DeveloperRepositoryImplementation implements DeveloperRepository {
             e.printStackTrace();
         }
         specialtyRepositoryImplementation.update(developer.getSpecialty());
-        for (Skill skill : developer.getSkills()){
+        for (Skill skill : developer.getSkills()) {
             skillRepositoryImplementation.update(skill);
         }
     }
@@ -68,7 +68,7 @@ public class DeveloperRepositoryImplementation implements DeveloperRepository {
         List<DeveloperSkill> developerSkillList = developerSkillRepositoryImplementation.select(developer.getId());
         developer.setSpecialty(specialtyRepositoryImplementation.select(developerSpecialty.getSpecialtyId()));
         List<Skill> skillList = new ArrayList<Skill>();
-        for(DeveloperSkill developerSkill : developerSkillList){
+        for (DeveloperSkill developerSkill : developerSkillList) {
             skillList.add(skillRepositoryImplementation.select(developerSkill.getSkillId()));
         }
         developer.setSkills(skillList);
@@ -87,12 +87,12 @@ public class DeveloperRepositoryImplementation implements DeveloperRepository {
         }
         developerSpecialtyRepository.delete(new DeveloperSpecialty(developer.getId(), developer.getSpecialty().getId()));
         List<DeveloperSkill> developerSkillList = new ArrayList<DeveloperSkill>();
-        for (Skill skill : developer.getSkills()){
+        for (Skill skill : developer.getSkills()) {
             developerSkillList.add(new DeveloperSkill(developer.getId(), skill.getId()));
         }
         developerSkillRepositoryImplementation.delete(developerSkillList);
         specialtyRepositoryImplementation.delete(developer.getSpecialty());
-        for (Skill skill : developer.getSkills()){
+        for (Skill skill : developer.getSkills()) {
             skillRepositoryImplementation.delete(skill);
         }
     }

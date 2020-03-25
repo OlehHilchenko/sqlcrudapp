@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkillConnection extends JDBCConnection <Skill> {
+public class SkillConnection extends JDBCConnection<Skill> {
 
     @Override
     public void createOrDeleteOrUpdate(String sql, Statement statement) throws SQLException {

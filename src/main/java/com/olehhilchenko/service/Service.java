@@ -8,10 +8,10 @@ import com.olehhilchenko.repository.RepoUtils;
 /**
  * This class is repository layer, it stores developer-type objects in a mysql database;
  * Supports basic operations:
- *      insert
- *      update
- *      select
- *      delete
+ * insert
+ * update
+ * select
+ * delete
  *
  * @author Oleg Gilchenko
  * @version 1.0
@@ -20,23 +20,23 @@ import com.olehhilchenko.repository.RepoUtils;
 public class Service {
     private DeveloperRepository developerRepository = new DeveloperRepositoryImplementation();
 
-    public void add(Developer developer){
+    public void add(Developer developer) {
         developerRepository.insert(developer);
     }
 
-    public void update(Developer developer){
+    public void update(Developer developer) {
         developerRepository.update(developer);
     }
 
-    public Developer get(Integer id){
+    public Developer get(Integer id) {
         return developerRepository.select(id);
     }
 
-    public void remove(Developer developer){
+    public void remove(Developer developer) {
         developerRepository.delete(developer);
     }
 
-    public Integer nextId (){
+    public Integer nextId() {
         return RepoUtils.getNextID();
     }
 }

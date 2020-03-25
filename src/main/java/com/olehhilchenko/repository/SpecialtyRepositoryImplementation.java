@@ -21,7 +21,7 @@ public class SpecialtyRepositoryImplementation implements SpecialtyRepository {
     }
 
     public void update(Specialty specialty) {
-        String sql = "UPDATE specialty SET name = '" + specialty.getName() + "', description = '" + specialty.getDescription()+ "' WHERE" +
+        String sql = "UPDATE specialty SET name = '" + specialty.getName() + "', description = '" + specialty.getDescription() + "' WHERE" +
                 " id = " + specialty.getId() + ";";
         try {
             specialtyConnection.connection(sql, true, false);

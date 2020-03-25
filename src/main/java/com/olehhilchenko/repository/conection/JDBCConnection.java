@@ -16,13 +16,10 @@ public abstract class JDBCConnection<T> {
         Connection connection = null;
         Statement statement = null;
         try {
-            System.out.println("Registering JDBC driver...");
             Class.forName(JDBC_DRIVER);
 
-            System.out.println("Creating connection to database...");
             connection = DriverManager.getConnection(DATABASE_URL, USER, PASSWORD);
 
-            System.out.println("SQL request in progress...");
             statement = connection.createStatement();
 
             if (createOrDeleteT) {
@@ -30,7 +27,6 @@ public abstract class JDBCConnection<T> {
             } else if (selectT) {
                 t = select(sql, statement);
             }
-            System.out.println("SQL request completed...");
         } finally {
             if (statement != null) {
                 statement.close();

@@ -9,7 +9,7 @@ public class DeveloperSkillRepositoryImplementation implements DeveloperSkillRep
     private DeveloperSkillConnection developerSkillConnection = new DeveloperSkillConnection();
 
     public void insert(List<DeveloperSkill> developerSkills) {
-        for (DeveloperSkill developerSkill : developerSkills){
+        for (DeveloperSkill developerSkill : developerSkills) {
             String sql = "INSERT INTO developer_skills (developer_id, skill_id)\n" +
                     "VALUES (" + developerSkill.getDeveloperId() + ", " + developerSkill.getSkillId() + ");";
             try {
@@ -40,7 +40,7 @@ public class DeveloperSkillRepositoryImplementation implements DeveloperSkillRep
     }
 
     public void delete(List<DeveloperSkill> developerSkills) {
-        for(DeveloperSkill developerSkill : developerSkills){
+        for (DeveloperSkill developerSkill : developerSkills) {
             String sql = "DELETE FROM developer_skills\n" +
                     "WHERE (developer_id = " + developerSkill.getDeveloperId() + ");";
             try {

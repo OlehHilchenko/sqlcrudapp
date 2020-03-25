@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class RepoUtils {
     private static int id;
 
-    public static Integer getNextID (){
+    public static Integer getNextID() {
         GetMaxIDConnection getMaxIDConnection = new GetMaxIDConnection();
         String sql = "SELECT\n" +
                 "  MAX(a.id),\n" +

@@ -15,17 +15,21 @@ public class TestService {
      * @version 1.0
      */
     private Service service = new Service();
+    private static Developer developer;
+    private static Developer cloneDeveloper;
+    private static Developer controlDeveloper;
 
     @Test
     public void getFiveId (){
-        for(int i = 0; i < 5; i++){
+        /**
+         * Service class method, returns the next free id from sql db(subsequently used to create a new object by the developer).
+         * */
             System.out.println(service.nextId());
-        }
     }
 
 
     @Test
-    public void insertDeveloper(){
+    public void insertAndSelectDeveloper(){
         List<Skill> skillList = new ArrayList<Skill>();
         skillList.add(new Skill(service.nextId(), "Funy"));
         skillList.add(new Skill(service.nextId(), "Smart"));
