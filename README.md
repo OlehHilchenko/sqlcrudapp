@@ -16,4 +16,4 @@ Secondly: Download the maven dependencies to the local repository:
           We will assemble the project:
           mvn clean install
           
-Thirdly: Launch the application: src/main/java/com/olehhilchenko/Main
+Thirdly: Launch the application: src/main/java/com/olehhilchenko/AppRunner

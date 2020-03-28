@@ -1,11 +1,11 @@
 package com.olehhilchenko.view;
 
-import com.olehhilchenko.controller.DeveloperController;
+import com.olehhilchenko.controller.Controller;
 
 public class MainMenuActions {
 
 
-    private DeveloperController developerController = new DeveloperController();
+    private Controller controller = new Controller();
 
 
     public void mainMenuActions() {
@@ -16,16 +16,16 @@ public class MainMenuActions {
             numberOfChoice = PrintPartOfTheMenu.integerScanner();
             switch (numberOfChoice) {
                 case (1):
-                    developerController.addDeveloper();
+                    controller.addDeveloper();
                     break;
                 case (2):
-                    developerController.viewDeveloper();
+                    controller.viewDeveloper();
                     break;
                 case (3):
-                    developerController.removeDeveloper();
+                    controller.removeDeveloper();
                     break;
                 case (4):
-                    developerController.updateDeveloper();
+                    controller.updateDeveloper();
                     break;
                 case (5):
                     endPerformance = true;

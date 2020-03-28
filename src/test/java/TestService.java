@@ -1,7 +1,7 @@
 import com.olehhilchenko.model.Developer;
 import com.olehhilchenko.model.Skill;
 import com.olehhilchenko.model.Specialty;
-import com.olehhilchenko.service.Service;
+import com.olehhilchenko.service.DeveloperService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,12 +12,15 @@ import static org.junit.Assert.assertEquals;
 
 public class TestService {
     /**
-     * Test class for {@link com.olehhilchenko.service.Service}
+     * Test class for {@link DeveloperService}
      *
      * @author Oleg Gilchenko
      * @version 1.0
      */
-    private static Service service = new Service();
+
+
+    private static DeveloperService developerService = new DeveloperService();
+
     private static Developer developer;
     private static Developer controlDeveloper;
     private static Developer selectedDeveloper;
@@ -25,50 +28,54 @@ public class TestService {
 
     @BeforeClass
     public static void setUp() {
-        //Create a new Developer.
-        List<Skill> skillList = new ArrayList<Skill>();
-        skillList.add(new Skill(service.nextId(), "Funy"));
-        skillList.add(new Skill(service.nextId(), "Smart"));
-        developer = new Developer(service.nextId(), "Petro", "Golub", new Specialty(service.nextId(), "Java", "EE"), skillList);
-        //Get controlDeveloper(By copying developer).
-        controlDeveloper = getCopy(developer);
+        List<Skill> skillList = new ArrayList<>();
+        skillList.add(new Skill(444555, null));
+        skillList.add(new Skill(444556, null));
+        Specialty specialty = new Specialty(333555, null, null);
+        developer = new Developer(111222, "Olegolas", "Gil", specialty, skillList);
 
-        updatedDeveloper = getCopy(developer);
-        updatedDeveloper.setFirstName("Peter");
-        updatedDeveloper.setLastName("Gol");
+        List<Skill> controlSkillList = new ArrayList<>();
+        controlSkillList.add(new Skill(444555, null));
+        controlSkillList.add(new Skill(444556, null));
+        Specialty controlSpecialty = new Specialty(333555, null, null);
+        controlDeveloper = new Developer(111222, "Olegolas", "Gil", controlSpecialty, controlSkillList);
+
+        updatedDeveloper = new Developer(111222, "Oleg", "Gilchenko", null, null);
     }
 
     @Test
     public void getId() {
         /**
-         * Service class method, returns the next free id from sql db(subsequently used to create a new object by the developer).
+         * DeveloperService class method, returns the next free id from sql db(subsequently used to create a new object by the developer).
          * */
-        System.out.println(service.nextId());
+        System.out.println(developerService.nextId());
     }
 
 
-    private static Developer getCopy(Developer d) {
-        return new Developer(d.getId(), d.getFirstName(), d.getLastName(), new Specialty(d.getSpecialty().getId(), d.getSpecialty().getName(), d.getSpecialty().getDescription()), new ArrayList<Skill>(d.getSkills()));
+    @Test
+    public void insert() {
+        developerService.add(developer);
     }
 
     @Test
-    public void insertAndSelectDeveloper() {
-        //Insert developer in to mySQL database.
-        service.add(developer);
-        //selectedDeveloper assign received Developer from mySQL data base.
-        selectedDeveloper = service.get(controlDeveloper.getId());
-        //Compare control and received Developers.
+    public void select() {
+        selectedDeveloper = developerService.get(111222);
+        System.out.println(controlDeveloper);
+        System.out.println(selectedDeveloper);
         assertEquals(controlDeveloper, selectedDeveloper);
-        //Get developer before update.
-        System.out.println(service.get(controlDeveloper.getId()));
-        //Update developer.
-        service.update(updatedDeveloper);
-        //Get developer after update.
-        System.out.println(service.get(controlDeveloper.getId()));
-        //Delete developer frome mySQL database.
-        service.remove(updatedDeveloper);
+    }
 
-        assertEquals(new Developer(0, null, null, new Specialty(), new ArrayList<Skill>()), service.get(controlDeveloper.getId()));
+    @Test
+    public void update() {
+        System.out.println(developerService.get(111222));
+        developerService.update(updatedDeveloper);
+        System.out.println(developerService.get(111222));
+    }
 
+    @Test
+    public void delete() {
+        System.out.println(developerService.get(111222));
+        developerService.remove(updatedDeveloper);
+        System.out.println(developerService.get(111222));
     }
 }

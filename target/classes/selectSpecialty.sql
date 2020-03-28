@@ -1,1 +1,0 @@
-SELECT developerId, name, description FROM specialty WHERE developerId = 2;

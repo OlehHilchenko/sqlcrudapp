@@ -2,8 +2,8 @@ package com.olehhilchenko.service;
 
 import com.olehhilchenko.model.Developer;
 import com.olehhilchenko.repository.DeveloperRepository;
-import com.olehhilchenko.repository.DeveloperRepositoryImplementation;
-import com.olehhilchenko.repository.RepoUtils;
+import com.olehhilchenko.repository.jdbc.JDBCDeveloperRepositoryImpl;
+import com.olehhilchenko.repository.jdbc.RepositoryUtils;
 
 /**
  * This class is repository layer, it stores developer-type objects in a mysql database;
@@ -17,8 +17,9 @@ import com.olehhilchenko.repository.RepoUtils;
  * @version 1.0
  */
 
-public class Service {
-    private DeveloperRepository developerRepository = new DeveloperRepositoryImplementation();
+public class DeveloperService {
+
+    private DeveloperRepository developerRepository = new JDBCDeveloperRepositoryImpl();
 
     public void add(Developer developer) {
         developerRepository.insert(developer);
@@ -37,6 +38,6 @@ public class Service {
     }
 
     public Integer nextId() {
-        return RepoUtils.getNextID();
+        return RepositoryUtils.getNextID();
     }
 }

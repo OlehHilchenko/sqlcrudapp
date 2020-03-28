@@ -61,7 +61,7 @@ public class Specialty {
 
     @Override
     public String toString() {
-        return "SpecialtyRepository{" +
+        return "Specialty{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +

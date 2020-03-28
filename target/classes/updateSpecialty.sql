@@ -1,1 +1,0 @@
-UPDATE specialty SET name = 'Php', description = 'jun' WHERE developerId = 11;
