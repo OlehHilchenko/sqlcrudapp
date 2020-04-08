@@ -48,7 +48,7 @@ public class TestService {
         Specialty updatedSpecialty = new Specialty(333555, "Java", "SE, EECore");
         updatedDeveloper = new Developer(111222, "Oleg", "Gilchenko", updatedSpecialty, updatedSkillList);
     }
-
+/*
     @Test
     public void DevDAOInsert() {
         DeveloperRepository developerRepository = new DeveloperDAO();
@@ -84,9 +84,10 @@ public class TestService {
 
     @Test
     public void getId() {
-        /**
-         * DeveloperService class method, returns the next free id from sql db(subsequently used to create a new object by the developer).
-         * */
+
+          //DeveloperService class method, returns the next free id from sql db(subsequently used to create a new object by the developer).
+
         System.out.println(developerService.nextId());
     }
+    */
 }
