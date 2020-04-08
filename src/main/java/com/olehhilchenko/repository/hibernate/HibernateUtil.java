@@ -1,8 +1,28 @@
-package com.olehhilchenko.repository.jdbc;
+package com.olehhilchenko.repository.hibernate;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.sql.*;
 
-public class RepositoryUtils {
+public class HibernateUtil {
+
+    private static final SessionFactory sessionFactory;
+
+    static {
+        try {
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/csuser_db?useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USER = "root";
@@ -56,4 +76,3 @@ public class RepositoryUtils {
         return ++id;
     }
 }
-

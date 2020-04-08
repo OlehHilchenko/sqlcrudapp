@@ -28,6 +28,9 @@ public class MainMenuActions {
                     controller.updateDeveloper();
                     break;
                 case (5):
+                    controller.viewAllDeveloper();
+                    break;
+                case (6):
                     endPerformance = true;
                     break;
                 default:

@@ -41,6 +41,7 @@ public class PrintPartOfTheMenu {
         System.out.println("2.  Get view Developer by id.");
         System.out.println("3.  Remove Developer by id.");
         System.out.println("4.  Update developer by id.");
-        System.out.println("5.  Exit the program.");
+        System.out.println("5.  View all Developers(List<Developer>).");
+        System.out.println("6.  Exit the program.");
     }
 }

@@ -1,13 +1,33 @@
 package com.olehhilchenko.model;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "developer")
 public class Developer {
 
+    @Id
+    @Column(name = "id")
     private int id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "developer_specialty",
+            joinColumns =
+                    {@JoinColumn(name = "developer_id", referencedColumnName = "id")},
+            inverseJoinColumns =
+                    {@JoinColumn(name = "specialty_id", referencedColumnName = "id")})
     private Specialty specialty;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "developer_skills",
+            joinColumns =
+                    {@JoinColumn(name = "developer_id", referencedColumnName = "id")},
+            inverseJoinColumns =
+                    {@JoinColumn(name = "skill_id", referencedColumnName = "id")})
     private List<Skill> skills;
 
     public Developer() {

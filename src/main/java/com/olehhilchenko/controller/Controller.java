@@ -4,8 +4,6 @@ import com.olehhilchenko.model.Developer;
 import com.olehhilchenko.model.Skill;
 import com.olehhilchenko.model.Specialty;
 import com.olehhilchenko.service.DeveloperService;
-import com.olehhilchenko.service.SkillService;
-import com.olehhilchenko.service.SpecialtyService;
 import com.olehhilchenko.view.PrintPartOfTheMenu;
 
 import java.util.ArrayList;
@@ -13,8 +11,7 @@ import java.util.List;
 
 public class Controller {
     private DeveloperService developerService = new DeveloperService();
-    private SpecialtyService specialtyService = new SpecialtyService();
-    private SkillService skillService = new SkillService();
+
 
     public void addDeveloper() {
         Developer developer = new Developer();
@@ -61,10 +58,7 @@ public class Controller {
         System.out.println(developer);
 
         developerService.add(developer);
-        specialtyService.add(developer.getSpecialty());
-        for (Skill skill : developer.getSkills()) {
-            skillService.add(skill);
-        }
+
     }
 
     public void viewDeveloper() {
@@ -72,13 +66,6 @@ public class Controller {
         int id = PrintPartOfTheMenu.integerScanner();
 
         Developer developer = developerService.get(id);
-        Specialty newSpecialty = specialtyService.get(developer.getSpecialty().getId());
-        List<Skill> newSkillList = new ArrayList<>();
-        for (Skill skill : developer.getSkills()) {
-            newSkillList.add(skillService.get(skill.getId()));
-        }
-        developer.setSpecialty(newSpecialty);
-        developer.setSkills(newSkillList);
         System.out.println(developer);
     }
 
@@ -87,21 +74,7 @@ public class Controller {
         int id = PrintPartOfTheMenu.integerScanner();
 
         Developer developer = developerService.get(id);
-        Specialty newSpecialty = specialtyService.get(developer.getSpecialty().getId());
-        List<Skill> newSkillList = new ArrayList<>();
-        for (Skill skill : developer.getSkills()) {
-            newSkillList.add(skillService.get(skill.getId()));
-        }
-        developer.setSpecialty(newSpecialty);
-        developer.setSkills(newSkillList);
-        System.out.println(developer);
-
-        specialtyService.remove(developer.getSpecialty());
-        for (Skill skill : developer.getSkills()) {
-            skillService.remove(skill);
-        }
         developerService.remove(developer);
-
     }
 
     public void updateDeveloper() {
@@ -139,13 +112,13 @@ public class Controller {
         }
 
         updatedDeveloper.setSkills(updatedSkillList);
-
-        System.out.println(updatedDeveloper);
-
-        specialtyService.update(updatedDeveloper.getSpecialty());
-        for (Skill skill : updatedDeveloper.getSkills()) {
-            skillService.update(skill);
-        }
         developerService.update(updatedDeveloper);
+    }
+
+    public void viewAllDeveloper() {
+        System.out.println();
+        for (Developer developer : developerService.getDeveloperList())
+            System.out.println(developer);
+        System.out.println();
     }
 }

@@ -1,10 +1,20 @@
 package com.olehhilchenko.model;
 
-public class Specialty {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "specialty")
+public class Specialty {
+    @Id
+    @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
+
+    @OneToOne(mappedBy = "specialty")
+    private Developer developer;
 
     public Specialty() {
     }
@@ -13,6 +23,21 @@ public class Specialty {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Specialty(int id, String name, String description, Developer developer) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.developer = developer;
+    }
+
+    public Developer getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(Developer developer) {
+        this.developer = developer;
     }
 
     public int getId() {

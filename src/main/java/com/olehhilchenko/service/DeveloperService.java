@@ -2,8 +2,10 @@ package com.olehhilchenko.service;
 
 import com.olehhilchenko.model.Developer;
 import com.olehhilchenko.repository.DeveloperRepository;
-import com.olehhilchenko.repository.jdbc.JDBCDeveloperRepositoryImpl;
-import com.olehhilchenko.repository.jdbc.RepositoryUtils;
+import com.olehhilchenko.repository.hibernate.DeveloperDAO;
+import com.olehhilchenko.repository.hibernate.HibernateUtil;
+
+import java.util.List;
 
 /**
  * This class is repository layer, it stores developer-type objects in a mysql database;
@@ -19,7 +21,7 @@ import com.olehhilchenko.repository.jdbc.RepositoryUtils;
 
 public class DeveloperService {
 
-    private DeveloperRepository developerRepository = new JDBCDeveloperRepositoryImpl();
+    private DeveloperRepository developerRepository = new DeveloperDAO();
 
     public void add(Developer developer) {
         developerRepository.insert(developer);
@@ -37,7 +39,11 @@ public class DeveloperService {
         developerRepository.delete(developer);
     }
 
+    public List<Developer> getDeveloperList() {
+        return developerRepository.getDeveloperList();
+    }
+
     public Integer nextId() {
-        return RepositoryUtils.getNextID();
+        return HibernateUtil.getNextID();
     }
 }

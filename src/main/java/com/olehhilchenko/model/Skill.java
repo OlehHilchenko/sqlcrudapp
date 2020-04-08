@@ -1,9 +1,18 @@
 package com.olehhilchenko.model;
 
-public class Skill {
+import javax.persistence.*;
+import java.util.List;
 
+@Entity
+@Table(name = "skills")
+public class Skill {
+    @Id
+    @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
+    @ManyToMany(mappedBy = "skills")
+    private List<Developer> developer;
 
     public Skill() {
     }
@@ -11,6 +20,20 @@ public class Skill {
     public Skill(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Skill(int id, String name, List<Developer> developer) {
+        this.id = id;
+        this.name = name;
+        this.developer = developer;
+    }
+
+    public List<Developer> getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(List<Developer> developer) {
+        this.developer = developer;
     }
 
     public int getId() {
