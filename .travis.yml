@@ -1,1 +1,19 @@
 language: java
+
+services:
+  - mysql
+user: root
+userpassword: root
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+
+dist: trusty
+
+sudo: required
+
+before_script:
+  - mysql -e 'create database csuser_db;'
