@@ -84,24 +84,27 @@ public class Developer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Developer)) return false;
 
         Developer developer = (Developer) o;
 
-        if (id != developer.id) return false;
-        if (firstName != null ? !firstName.equals(developer.firstName) : developer.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(developer.lastName) : developer.lastName != null) return false;
-        if (specialty != null ? !specialty.equals(developer.specialty) : developer.specialty != null) return false;
-        return skills != null ? skills.equals(developer.skills) : developer.skills == null;
+        if (getId() != developer.getId()) return false;
+        if (getFirstName() != null ? !getFirstName().equals(developer.getFirstName()) : developer.getFirstName() != null)
+            return false;
+        if (getLastName() != null ? !getLastName().equals(developer.getLastName()) : developer.getLastName() != null)
+            return false;
+        if (getSpecialty() != null ? !getSpecialty().equals(developer.getSpecialty()) : developer.getSpecialty() != null)
+            return false;
+        return getSkills() != null ? getSkills().equals(developer.getSkills()) : developer.getSkills() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (specialty != null ? specialty.hashCode() : 0);
-        result = 31 * result + (skills != null ? skills.hashCode() : 0);
+        int result = getId();
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        result = 31 * result + (getSpecialty() != null ? getSpecialty().hashCode() : 0);
+        result = 31 * result + (getSkills() != null ? getSkills().hashCode() : 0);
         return result;
     }
 

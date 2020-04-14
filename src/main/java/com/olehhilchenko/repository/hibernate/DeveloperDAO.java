@@ -4,7 +4,7 @@ import com.olehhilchenko.model.Developer;
 import com.olehhilchenko.repository.DeveloperRepository;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
+
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class DeveloperDAO implements DeveloperRepository {
     public Developer select(Integer integer) {
         try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             session.beginTransaction();
-            Developer result = (Developer) session.load(Developer.class, integer);
+            Developer result = session.load(Developer.class, integer);
             Hibernate.initialize(result.getSkills());
             session.getTransaction().commit();
             return result;

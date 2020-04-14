@@ -55,18 +55,18 @@ public class Skill {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Skill)) return false;
 
         Skill skill = (Skill) o;
 
-        if (id != skill.id) return false;
-        return name != null ? name.equals(skill.name) : skill.name == null;
+        if (getId() != skill.getId()) return false;
+        return getName() != null ? getName().equals(skill.getName()) : skill.getName() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = getId();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         return result;
     }
 

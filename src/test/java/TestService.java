@@ -1,18 +1,23 @@
 import com.olehhilchenko.model.Developer;
 import com.olehhilchenko.model.Skill;
 import com.olehhilchenko.model.Specialty;
-import com.olehhilchenko.repository.DeveloperRepository;
-import com.olehhilchenko.repository.hibernate.DeveloperDAO;
+import com.olehhilchenko.repository.hibernate.HibernateUtil;
 import com.olehhilchenko.service.DeveloperService;
-import org.junit.BeforeClass;
+import org.hibernate.ObjectNotFoundException;
+import org.junit.After;
 import org.junit.Test;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 public class TestService {
+
     /**
      * Test class for {@link DeveloperService}
      *
@@ -20,74 +25,65 @@ public class TestService {
      * @version 1.0
      */
 
+    private DeveloperService developerService = new DeveloperService();
 
-    private static DeveloperService developerService = new DeveloperService();
+    @After
+    public void tearDown() {
+        try (Statement statement = HibernateUtil.connection().createStatement()) {
+            statement.addBatch("TRUNCATE TABLE developer;");
+            statement.addBatch("TRUNCATE TABLE developer_specialty;");
+            statement.addBatch("TRUNCATE TABLE developer_skills;");
+            statement.addBatch("TRUNCATE TABLE specialty;");
+            statement.addBatch("TRUNCATE TABLE skills;");
+            statement.executeBatch();
+        } catch (ClassNotFoundException cx) {
+            cx.printStackTrace();
+        } catch (SQLException sx) {
+            sx.printStackTrace();
+        }
+    }
 
-    private static Developer developer;
-    private static Developer controlDeveloper;
-    private static Developer selectedDeveloper;
-    private static Developer updatedDeveloper;
-
-    @BeforeClass
-    public static void setUp() {
+    @Test
+    public void insertAndSelectUseDeveloperService() {
         List<Skill> skillList = new ArrayList<>();
-        skillList.add(new Skill(444555, "mi"));
-        skillList.add(new Skill(444556, "mimimi"));
-        Specialty specialty = new Specialty(333555, "lol", "kek");
-        developer = new Developer(111222, "Olegolas", "Gil", specialty, skillList);
+        skillList.add(new Skill(444555, "testSkill01"));
+        skillList.add(new Skill(444556, "testSkill02"));
+        Specialty specialty = new Specialty(333555, "testSpecialty01", "testDescription");
+        Developer testDeveloperOne = new Developer(111222, "testDeveloper01", "testDeveloper01", specialty, skillList);
 
-        List<Skill> controlSkillList = new ArrayList<>();
-        controlSkillList.add(new Skill(444555, "mi"));
-        controlSkillList.add(new Skill(444556, "mimimi"));
-        Specialty controlSpecialty = new Specialty(333555, "lol", "kek");
-        controlDeveloper = new Developer(111222, "Olegolas", "Gil", controlSpecialty, controlSkillList);
-
-        List<Skill> updatedSkillList = new ArrayList<>();
-        updatedSkillList.add(new Skill(444555, "Fast"));
-        updatedSkillList.add(new Skill(444556, "Smart"));
-        Specialty updatedSpecialty = new Specialty(333555, "Java", "SE, EECore");
-        updatedDeveloper = new Developer(111222, "Oleg", "Gilchenko", updatedSpecialty, updatedSkillList);
-    }
-/*
-    @Test
-    public void DevDAOInsert() {
-        DeveloperRepository developerRepository = new DeveloperDAO();
-        developerRepository.insert(developer);
+        developerService.add(testDeveloperOne);
+        Developer getDeveloper = developerService.get(111222);
+        assertNotNull(getDeveloper);
+        assertTrue(testDeveloperOne.getId() == getDeveloper.getId());
     }
 
     @Test
-    public void SelDAO() {
-        DeveloperRepository developerRepository = new DeveloperDAO();
-        System.out.println(developerRepository.select(111222));
-    }
+    public void updateAndDeleteUseDeveloperService() {
+        List<Skill> skillList = new ArrayList<>();
+        skillList.add(new Skill(334, "newTestSkill01"));
+        skillList.add(new Skill(333, "newTestSkill02"));
+        Specialty specialty = new Specialty(223, "newTestSpecialty", "newTestDescription");
+        Developer testDeveloperTwo = new Developer(123, "testFirstName", "testLastName", specialty, skillList);
 
-    @Test
-    public void UpdDAO() {
-        DeveloperRepository developerRepository = new DeveloperDAO();
-        developerRepository.update(updatedDeveloper);
-    }
+        developerService.add(testDeveloperTwo);
+        testDeveloperTwo.setFirstName("testDev");
+        testDeveloperTwo.setLastName("testDev");
 
+        developerService.update(testDeveloperTwo);
+        Developer getDeveloper = developerService.get(123);
+        assertTrue("testDev".equals(getDeveloper.getFirstName()) && "testDev".equals(getDeveloper.getLastName()));
+        developerService.remove(getDeveloper);
 
-    @Test
-    public void DelDAO() {
-        DeveloperRepository developerRepository = new DeveloperDAO();
-        developerRepository.delete(updatedDeveloper);
-    }
-
-    @Test
-    public void GetListDAO() {
-        DeveloperRepository developerRepository = new DeveloperDAO();
-        List<Developer> developerList = ((DeveloperDAO) developerRepository).getDeveloperList();
-        for (Developer developer : developerList)
-            System.out.println(developer);
+        assertThrows(ObjectNotFoundException.class, () -> {
+            developerService.get(123);
+        });
     }
 
     @Test
     public void getId() {
-
-          //DeveloperService class method, returns the next free id from sql db(subsequently used to create a new object by the developer).
-
-        System.out.println(developerService.nextId());
+        //DeveloperService class method, returns the next free id from sql db(subsequently used to create a new object by the developer).
+        int id = developerService.nextId();
+        System.out.println(id);
+        assertTrue(id > 0);
     }
-    */
 }

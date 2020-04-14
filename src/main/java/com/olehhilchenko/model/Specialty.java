@@ -67,20 +67,20 @@ public class Specialty {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Specialty)) return false;
 
         Specialty specialty = (Specialty) o;
 
-        if (id != specialty.id) return false;
-        if (name != null ? !name.equals(specialty.name) : specialty.name != null) return false;
-        return description != null ? description.equals(specialty.description) : specialty.description == null;
+        if (getId() != specialty.getId()) return false;
+        if (getName() != null ? !getName().equals(specialty.getName()) : specialty.getName() != null) return false;
+        return getDescription() != null ? getDescription().equals(specialty.getDescription()) : specialty.getDescription() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = getId();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
         return result;
     }
 
