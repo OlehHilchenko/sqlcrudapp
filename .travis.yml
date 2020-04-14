@@ -2,8 +2,10 @@ language: java
 
 services:
   - mysql
+
 user: root
 userpassword: root
+
 addons:
   apt:
     sources:
